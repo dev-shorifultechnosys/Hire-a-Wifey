@@ -1,0 +1,1159 @@
+/* ========================================================================== 
+   Hire a Wifey — Hervey Bay Homepage
+   Clean responsive CSS written for a lightweight static prototype.
+   The layout is intentionally modular so each section can later become a
+   reusable WordPress block / Elementor container / Gutenberg pattern.
+   ========================================================================== */
+
+:root{
+  /* Brand palette sampled from the supplied logo, with deeper pink reserved
+     for high-contrast conversion actions. */
+  --ink:#1b1719;
+  --ink-soft:#312a2e;
+  --muted:#6f656a;
+  --line:#eee4e8;
+  --pink:#df718a;
+  --pink-strong:#d9547b;
+  --pink-dark:#b93d64;
+  --pink-soft:#fff2f6;
+  --pink-soft-2:#fff8fa;
+  --rose:#f4d8e1;
+  --white:#fff;
+  --cream:#fffdfd;
+
+  --shadow:0 22px 60px rgba(50,28,38,.12);
+  --shadow-soft:0 12px 34px rgba(50,28,38,.075);
+  --radius-lg:30px;
+  --radius-md:22px;
+
+  --serif:"DM Serif Display", Georgia, serif;
+  --sans:"Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   Reset / global type
+   -------------------------------------------------------------------------- */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--white);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit}
+button{color:inherit}
+svg{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.svg-sprite{position:absolute;width:0;height:0;overflow:hidden}
+
+.container{width:min(1180px,calc(100% - 40px));margin-inline:auto}
+.section-pad{padding:104px 0}
+
+.skip-link{position:fixed;top:10px;left:10px;z-index:9999;background:var(--ink);color:#fff;padding:10px 14px;border-radius:10px;transform:translateY(-140%)}
+.skip-link:focus{transform:none}
+
+.eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;color:var(--pink-dark);font-weight:800;text-transform:uppercase;letter-spacing:.14em;font-size:.75rem}
+.eyebrow.light{color:#ffabc1}
+
+h1,h2{font-family:var(--serif);font-weight:400;letter-spacing:-.035em;line-height:.98;margin:0 0 20px}
+h1{font-size:clamp(3.25rem,5.65vw,5.95rem);max-width:760px}
+h2{font-size:clamp(2.45rem,4.2vw,4.3rem)}
+h3{margin:0 0 8px;line-height:1.18}
+p{margin:0 0 18px;color:var(--muted)}
+
+.section-head{margin-bottom:48px}
+.section-head p{max-width:700px;font-size:1.03rem}
+.section-head.split{display:flex;justify-content:space-between;align-items:flex-end;gap:30px}
+.section-head.centered{text-align:center;max-width:790px;margin:0 auto 52px}
+.section-head.centered p{margin-inline:auto}
+
+.button-row,.hero-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:52px;padding:0 22px;border-radius:999px;border:1px solid transparent;font-weight:800;font-size:.92rem;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease,color .22s ease;cursor:pointer}
+.btn svg{width:17px;height:17px;transition:transform .22s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn:hover svg{transform:translateX(3px)}
+.btn-primary{background:linear-gradient(135deg,var(--pink-strong),#e77895);color:#fff;box-shadow:0 12px 28px rgba(196,72,111,.24)}
+.btn-primary:hover{box-shadow:0 16px 36px rgba(196,72,111,.32)}
+.btn-outline{border-color:#baadb3;background:#fff;color:var(--ink)}
+.btn-outline:hover{border-color:var(--pink-dark);color:var(--pink-dark)}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-white{background:#fff;color:var(--ink)}
+.btn-ghost{background:transparent;border-color:rgba(255,255,255,.52);color:#fff}
+.btn-small{min-height:44px;padding:0 18px;font-size:.84rem}
+.btn-large{min-height:56px;padding:0 26px}
+.text-link{display:inline-flex;align-items:center;gap:8px;color:var(--pink-dark);font-weight:800}
+.text-link svg{width:16px;height:16px}
+
+/* --------------------------------------------------------------------------
+   Header
+   -------------------------------------------------------------------------- */
+.site-header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.9);backdrop-filter:blur(18px);border-bottom:1px solid rgba(238,228,232,.75);transition:.2s ease}
+.site-header.is-scrolled{box-shadow:0 10px 30px rgba(35,23,28,.08)}
+.header-inner{height:92px;display:flex;align-items:center;gap:28px}
+.brand{width:158px;flex:0 0 auto;align-self:stretch;display:flex;align-items:center}
+.brand img{width:146px;height:auto}
+.desktop-nav{display:flex;gap:25px;align-items:center;margin-left:auto}
+.desktop-nav a{font-size:.82rem;font-weight:700;color:#3a3035;position:relative}
+.desktop-nav a:after{content:"";position:absolute;left:0;right:100%;bottom:-7px;height:2px;background:var(--pink-strong);transition:right .2s ease}
+.desktop-nav a:hover{color:var(--pink-dark)}
+.desktop-nav a:hover:after{right:0}
+.header-actions{display:flex;align-items:center;gap:12px}
+.phone-link{display:flex;align-items:center;gap:7px;font-size:.78rem;font-weight:800;color:var(--ink)}
+.phone-link svg{color:var(--pink-dark)}
+.menu-toggle{display:none;width:44px;height:44px;border:1px solid var(--line);background:#fff;border-radius:50%;align-items:center;justify-content:center;cursor:pointer}
+.menu-toggle .close-icon{display:none}
+.menu-toggle[aria-expanded="true"] .menu-icon{display:none}
+.menu-toggle[aria-expanded="true"] .close-icon{display:block}
+.mobile-menu{background:#fff;border-top:1px solid var(--line);box-shadow:0 22px 30px rgba(33,20,25,.08)}
+.mobile-menu nav{display:grid;padding-block:18px 24px}
+.mobile-menu a:not(.btn){padding:14px 4px;border-bottom:1px solid var(--line);font-family:var(--serif);font-size:1.45rem}
+.mobile-menu .btn{margin-top:18px}
+
+/* --------------------------------------------------------------------------
+   Hero
+   -------------------------------------------------------------------------- */
+.hero.hero-full{position:relative;min-height:790px;display:flex;flex-direction:column;background:#fff;overflow:hidden;isolation:isolate}
+.hero-bg{position:absolute;inset:0;z-index:-3;overflow:hidden}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:73% 48%}
+.hero-wash{position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(255,255,255,.995) 0%,rgba(255,255,255,.97) 43%,rgba(255,253,253,.80) 58%,rgba(255,255,255,.10) 100%)}
+.hero-wash:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 13% 18%,rgba(223,113,138,.10),transparent 30%)}
+.hero-content{min-height:700px;display:flex;align-items:center;padding:62px 0 54px}
+.hero-copy{width:min(675px,58%);padding:0}
+.hero-full h1{font-size:clamp(3.35rem,5.3vw,5.8rem);max-width:760px;text-wrap:balance}
+.hero-brandline{font-family:var(--serif);font-size:clamp(2rem,3.1vw,3.4rem);color:var(--pink-dark);line-height:1;margin:-3px 0 8px}
+.hero-tagline{font-size:1.35rem;color:var(--ink);font-weight:800;margin-bottom:3px}
+.hero-emphasis{font-size:1.18rem;color:var(--pink-dark);font-weight:800;margin-bottom:14px}
+.hero-lead{font-size:1.02rem;max-width:620px;margin-bottom:28px;color:#554a4f}
+.hero-actions{margin-bottom:26px}
+.hero-mini-proof{display:flex;flex-wrap:wrap;gap:15px 23px}
+.hero-mini-proof span{display:inline-flex;align-items:center;gap:7px;font-weight:800;font-size:.77rem}
+.hero-mini-proof svg{color:var(--pink-dark)}
+.hero-service-note{margin:13px 0 0;font-size:.75rem;color:#6c5e64;font-weight:700}
+.hero-trust-strip{margin-top:auto;background:rgba(255,255,255,.93);backdrop-filter:blur(16px);border-top:1px solid rgba(228,207,216,.9);border-bottom:1px solid rgba(228,207,216,.9)}
+.trust-strip-grid{min-height:76px;display:grid;grid-template-columns:repeat(5,1fr);align-items:center}
+.trust-strip-grid>div{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 15px;border-right:1px solid var(--line);font-size:.74rem;font-weight:800;text-align:center}
+.trust-strip-grid>div:last-child{border-right:0}
+.trust-strip-grid svg{color:var(--pink-dark);width:22px;height:22px;flex:0 0 auto}
+
+/* --------------------------------------------------------------------------
+   Intro
+   -------------------------------------------------------------------------- */
+.intro{background:#fff}
+.intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:74px;align-items:center}
+.intro-image{position:relative;min-width:0}
+.intro-image picture img{width:100%;aspect-ratio:1.2/1;object-fit:cover;object-position:center;border-radius:28px;box-shadow:var(--shadow-soft)}
+.task-float-card{position:absolute;left:-18px;top:50%;transform:translateY(-50%);display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;background:rgba(255,246,249,.95);backdrop-filter:blur(12px);padding:18px 20px;border:1px solid rgba(223,113,138,.17);border-radius:18px;box-shadow:var(--shadow-soft)}
+.task-float-card span{display:flex;align-items:center;gap:8px;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.025em}
+.task-float-card b{display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--pink-strong);color:#fff;font-size:.65rem}
+.intro-copy{max-width:560px}
+.intro-copy p{font-size:1.02rem}
+.lead-quote{font-family:var(--serif);font-size:1.48rem!important;line-height:1.25;color:var(--ink);margin:26px 0}
+.intro-copy .button-row{margin-top:28px}
+
+/* --------------------------------------------------------------------------
+   Difference banner
+   -------------------------------------------------------------------------- */
+.difference{padding:0 0 36px;background:#fff}
+.difference-panel{position:relative;overflow:hidden;display:grid;grid-template-columns:.82fr 1.18fr;gap:64px;align-items:center;background:linear-gradient(135deg,#1a1417,#351822);border-radius:28px;padding:62px 70px;box-shadow:0 18px 44px rgba(38,19,27,.17)}
+.difference-panel:after{content:"";position:absolute;width:300px;height:300px;border:1px solid rgba(255,255,255,.08);border-radius:50%;right:-110px;bottom:-170px}
+.difference-panel h2{color:#fff;margin-bottom:0}
+.difference-copy{position:relative;z-index:1}
+.difference-copy>p{color:rgba(255,255,255,.74);font-size:1rem}
+.difference-statement{font-family:var(--serif);font-size:clamp(1.85rem,2.7vw,2.7rem)!important;line-height:1.12;color:#fff!important;margin:26px 0 30px!important}
+
+/* --------------------------------------------------------------------------
+   Audience
+   -------------------------------------------------------------------------- */
+.audience{background:linear-gradient(180deg,#fff8fa,#fff)}
+.audience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.audience-card{position:relative;min-height:210px;padding:26px;border:1px solid #eee2e6;border-radius:20px;background:#fff;box-shadow:0 10px 26px rgba(35,23,28,.045)}
+.audience-card>span{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:var(--pink-soft);color:var(--pink-dark);margin-bottom:22px}
+.audience-card>span svg{width:23px;height:23px}
+.audience-card h3{font-size:1rem}
+.audience-card p{font-size:.82rem;line-height:1.54;margin:0}
+.audience-card-wide{grid-column:2/3;background:linear-gradient(145deg,#fff,#fff4f7);border-color:#efcbd6}
+
+/* --------------------------------------------------------------------------
+   Services
+   -------------------------------------------------------------------------- */
+.services{background:#fff}
+.service-feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.service-feature{display:grid;grid-template-columns:44% 56%;min-height:260px;background:#fff;border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:0 10px 28px rgba(35,23,28,.055);transition:.25s ease}
+.service-feature:hover{transform:translateY(-5px);box-shadow:0 22px 46px rgba(35,23,28,.11);border-color:#efc5d1}
+.service-feature picture{display:block;overflow:hidden}
+.service-feature img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .35s ease}
+.service-feature:hover img{transform:scale(1.035)}
+.service-feature-copy{display:flex;gap:14px;padding:26px 24px;align-items:flex-start}
+.service-icon{width:42px;height:42px;border-radius:13px;background:var(--pink-soft);display:grid;place-items:center;color:var(--pink-dark);flex:0 0 auto}
+.service-icon svg{width:21px;height:21px}
+.service-feature-copy h3{font-size:1.08rem}
+.service-feature-copy p{font-size:.82rem;line-height:1.52;margin:0}
+.service-more-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}
+.service-mini{display:flex;gap:13px;align-items:flex-start;background:var(--pink-soft-2);border:1px solid #f1e4e8;border-radius:18px;padding:20px}
+.service-mini>span{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:#fff;color:var(--pink-dark);box-shadow:0 8px 18px rgba(80,38,54,.05);flex:0 0 auto}
+.service-mini>span svg{width:20px;height:20px}
+.service-mini h3{font-size:.9rem}
+.service-mini p{font-size:.73rem;line-height:1.48;margin:0}
+.service-scope{display:flex;flex-wrap:wrap;gap:9px 10px;align-items:center;margin-top:22px;padding:18px 20px;border:1px dashed #e6c7d2;border-radius:18px;background:#fffafd}
+.service-scope strong{font-size:.79rem;margin-right:4px}
+.service-scope span{display:inline-flex;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid #eadde2;font-size:.7rem;font-weight:700;color:#62565b}
+
+/* The final image-led service spans the full row on wide screens. This gives
+   meal preparation more visual weight because it is a key differentiator. */
+.service-feature-wide{grid-column:1/-1;grid-template-columns:38% 62%}
+.service-feature-wide .service-feature-copy{align-items:center}
+
+/* Broad requests do not need another stock-like card. Keep this flexible-help
+   message compact and conversion focused. */
+.general-help-callout{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;margin-top:18px;padding:20px 22px;border:1px solid #efdfe5;border-radius:20px;background:linear-gradient(135deg,#fff,#fff7fa);box-shadow:0 10px 26px rgba(35,23,28,.04)}
+.general-help-callout h3{font-size:1rem;margin-bottom:4px}
+.general-help-callout p{font-size:.78rem;line-height:1.5;margin:0;max-width:740px}
+.general-help-callout .text-link{white-space:nowrap;font-size:.8rem}
+
+/* --------------------------------------------------------------------------
+   Build-your-visit interaction
+   -------------------------------------------------------------------------- */
+.build{background:linear-gradient(125deg,#fff5f8,#fde9f0 65%,#fff8fa);position:relative;overflow:hidden}
+.build:before{content:"";position:absolute;width:430px;height:430px;border-radius:50%;right:-160px;top:-190px;background:rgba(255,255,255,.6)}
+.build-grid{position:relative;z-index:1;display:grid;grid-template-columns:.95fr 1fr .8fr;gap:34px;align-items:center}
+.build-copy p{font-size:1rem}
+.build-note{display:flex;gap:9px;align-items:center;color:var(--ink);font-weight:700;font-size:.83rem!important;margin:26px 0}
+.build-note svg{color:var(--pink-dark)}
+.build-checklist{background:#fff;border:1px solid rgba(255,255,255,.8);border-radius:24px;padding:28px;box-shadow:var(--shadow-soft)}
+.checklist-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.checklist-head span{text-transform:uppercase;letter-spacing:.11em;color:var(--pink-dark);font-size:.66rem;font-weight:800}
+.checklist-head h3{font-family:var(--serif);font-size:1.58rem;margin-top:3px}
+.task-counter{width:60px;height:60px;border-radius:18px;background:var(--pink-soft);display:grid;place-items:center;align-content:center;text-align:center}
+.task-counter strong{font-size:1.26rem;line-height:1}
+.task-counter small{font-size:.58rem;color:var(--muted)}
+.task{display:flex;align-items:center;gap:10px;padding:9px 2px;cursor:pointer;font-size:.84rem;font-weight:700}
+.task input{position:absolute;opacity:0;pointer-events:none}
+.task .box{width:20px;height:20px;border:1.5px solid #c9bdc2;border-radius:6px;background:#fff;position:relative;flex:0 0 auto}
+.task.active .box{background:var(--pink-strong);border-color:var(--pink-strong)}
+.task.active .box:after{content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;border:solid white;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.task-progress{height:7px;background:#f0e8eb;border-radius:999px;margin-top:18px;overflow:hidden}
+.task-progress span{display:block;height:100%;width:50%;background:linear-gradient(90deg,var(--pink-strong),#ea8aa5);transition:width .25s ease}
+.build-benefit{align-self:stretch;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(145deg,#1b1518,#351822);color:#fff;border-radius:28px;padding:34px;box-shadow:0 18px 44px rgba(38,19,27,.16)}
+.build-benefit-icon{display:grid;place-items:center;width:52px;height:52px;border-radius:16px;background:rgba(255,255,255,.1);color:#ffadc2;margin-bottom:24px}
+.build-benefit-icon svg{width:26px;height:26px}
+.build-benefit h3{font-family:var(--serif);font-size:2rem;line-height:1.08;margin-bottom:14px}
+.build-benefit p{color:rgba(255,255,255,.72);font-size:.86rem;margin:0}
+
+/* Image-backed benefit card: the generated branded photo makes the flexible
+   Wifey visit tangible without adding another block of copy. */
+.build-benefit-image{position:relative;isolation:isolate;overflow:hidden;padding:0;min-height:430px;background:#1d1519}
+.build-benefit-image picture,.build-benefit-image img{position:absolute;inset:0;width:100%;height:100%}
+.build-benefit-image img{object-fit:cover;object-position:center;transition:transform .45s ease}
+.build-benefit-image:hover img{transform:scale(1.025)}
+.build-benefit-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,14,18,.05) 32%,rgba(22,14,18,.88) 100%);z-index:1}
+.build-benefit-copy{position:relative;z-index:2;margin-top:auto;padding:30px;color:#fff}
+.build-benefit-copy .eyebrow{margin-bottom:10px}
+.build-benefit-copy h3{font-family:var(--serif);font-size:1.8rem;line-height:1.08;margin-bottom:10px}
+.build-benefit-copy p{color:rgba(255,255,255,.78);font-size:.82rem;margin:0}
+
+/* --------------------------------------------------------------------------
+   Trust / why choose us
+   -------------------------------------------------------------------------- */
+.why{background:#fff}
+.why-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:62px;align-items:center}
+.why-copy p{font-size:1rem;max-width:450px}
+.why-copy .btn{margin-top:8px}
+.why-points{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.why-card{padding:24px;border:1px solid var(--line);border-radius:20px;background:#fff;min-height:190px;box-shadow:0 10px 24px rgba(35,23,28,.045)}
+.why-card>span{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:var(--pink-soft);color:var(--pink-dark);margin-bottom:22px}
+.why-card h3{font-size:.94rem}
+.why-card p{font-size:.76rem;line-height:1.5;margin:0}
+
+/* --------------------------------------------------------------------------
+   Service frequency
+   -------------------------------------------------------------------------- */
+.regular{background:linear-gradient(180deg,#fff8fa 0%,#fff 100%)}
+.regular-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.regular-card{position:relative;display:flex;flex-direction:column;min-height:325px;padding:34px;border-radius:26px;background:#fff;border:1px solid #eee2e7;box-shadow:0 12px 34px rgba(54,28,39,.055);overflow:hidden}
+.regular-card:before{content:"";position:absolute;width:150px;height:150px;border-radius:50%;right:-70px;top:-76px;background:rgba(223,113,138,.075)}
+.regular-card.featured{background:linear-gradient(150deg,#1b1518,#321820);border-color:#321e26;color:#fff;box-shadow:0 20px 50px rgba(38,19,27,.18);transform:translateY(-8px)}
+.regular-card.featured p{color:rgba(255,255,255,.7)}
+.regular-card.featured .text-link{color:#ffabc1}
+.regular-label{display:inline-flex;align-self:flex-start;padding:7px 10px;border-radius:999px;background:var(--pink-soft);color:var(--pink-dark);font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;margin-bottom:38px}
+.regular-card.featured .regular-label{background:rgba(255,255,255,.1);color:#ffabc1}
+.regular-card h3{font-family:var(--serif);font-size:2.05rem;margin-bottom:12px}
+.regular-card p{font-size:.9rem;flex:1}
+.regular-cta{text-align:center;margin-top:34px}
+
+/* --------------------------------------------------------------------------
+   Time-back emotional section
+   -------------------------------------------------------------------------- */
+.time-back{position:relative;min-height:590px;display:flex;align-items:center;overflow:hidden;background:#171215;color:#fff}
+.time-back-bg{position:absolute;inset:0}
+.time-back-bg img{width:100%;height:100%;object-fit:cover;object-position:center}
+.time-back-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(13,9,11,.96) 0%,rgba(13,9,11,.82) 44%,rgba(13,9,11,.28) 75%,rgba(13,9,11,.10) 100%)}
+.time-back-content{position:relative;z-index:2;padding:92px 0;max-width:650px;margin-left:max(calc((100vw - 1180px)/2),20px)}
+.time-back h2{max-width:650px}
+.time-back p{color:rgba(255,255,255,.8);font-size:1.02rem}
+.time-back blockquote{font-family:var(--serif);font-size:1.95rem;margin:28px 0;padding-left:18px;border-left:3px solid var(--pink);font-style:italic}
+.time-back .button-row{margin-top:24px}
+
+/* --------------------------------------------------------------------------
+   Hervey Bay service area
+   -------------------------------------------------------------------------- */
+.service-area{background:#fff}
+.area-grid{display:grid;grid-template-columns:1fr .9fr;gap:68px;align-items:center}
+.area-copy>p{font-size:1rem;max-width:650px}
+.area-list{display:grid;grid-template-columns:repeat(3,1fr);gap:0 26px;margin:28px 0}
+.area-list span{position:relative;padding:8px 0 8px 18px;border-bottom:1px solid var(--line);font-size:.8rem;font-weight:700}
+.area-list span:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--pink-strong);position:absolute;left:0;top:17px}
+.area-note{font-size:.8rem!important}
+.area-note a{color:var(--pink-dark);font-weight:800}
+.area-photo{position:relative}
+.area-photo img{width:100%;border-radius:26px;box-shadow:var(--shadow-soft);aspect-ratio:1.65/1;object-fit:cover}
+.map-pin-card{position:absolute;left:18px;bottom:18px;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);padding:13px 15px;border-radius:14px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow-soft)}
+.map-pin-card>svg{color:var(--pink-dark);width:25px;height:25px}
+.map-pin-card strong,.map-pin-card span{display:block}
+.map-pin-card strong{font-size:.76rem}
+.map-pin-card span{font-size:.65rem;color:var(--muted)}
+
+/* --------------------------------------------------------------------------
+   NDIS / DVA
+   -------------------------------------------------------------------------- */
+.support{background:linear-gradient(180deg,#fff8fa,#fff3f6)}
+.support-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.support-card{background:#fff;border:1px solid rgba(223,113,138,.13);border-radius:24px;padding:34px;box-shadow:var(--shadow-soft)}
+.support-mark{display:inline-grid;place-items:center;min-width:70px;height:48px;padding:0 12px;border-radius:13px;margin-bottom:24px;font-weight:800;letter-spacing:.02em}
+.support-mark.ndis{background:#6b318c;color:#fff;font-size:1.1rem}
+.support-mark.dva{background:#1e1e1e;color:#fff;font-size:1rem}
+.support-card h3{font-family:var(--serif);font-size:2rem;max-width:500px}
+.support-card p{font-size:.9rem}
+.support-card .text-link{margin-top:10px}
+
+/* --------------------------------------------------------------------------
+   How it works
+   -------------------------------------------------------------------------- */
+.steps{background:#fff}
+.steps-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;position:relative}
+.steps-grid:before{content:"";position:absolute;height:1px;background:#f0d1dc;left:8%;right:8%;top:50px;z-index:0}
+.step-card{text-align:center;position:relative;z-index:1;padding:0 12px}
+.step-no{display:inline-block;background:#fff;color:var(--pink-dark);font-size:.65rem;font-weight:800;padding:0 6px}
+.step-icon{width:70px;height:70px;border-radius:50%;display:grid;place-items:center;background:var(--pink-soft);color:var(--pink-dark);margin:10px auto 18px;border:7px solid #fff;box-shadow:0 0 0 1px #efd3dc}
+.step-icon svg{width:27px;height:27px}
+.step-card h3{font-size:.94rem}
+.step-card p{font-size:.75rem;line-height:1.5}
+.steps-cta{text-align:center;margin-top:40px}
+
+/* --------------------------------------------------------------------------
+   Reviews / social proof placeholder
+   -------------------------------------------------------------------------- */
+.reviews{background:linear-gradient(180deg,#fff,#fff9fb)}
+.review-source{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:var(--pink-soft);color:var(--pink-dark);font-size:.72rem;font-weight:800}
+.review-source svg{width:16px;height:16px}
+.reviews-stage{display:grid;grid-template-columns:.8fr 1.2fr;gap:24px;align-items:stretch;background:linear-gradient(145deg,#1b1518,#351822);border-radius:28px;padding:30px;box-shadow:0 18px 48px rgba(38,19,27,.17)}
+.reviews-message{padding:12px 8px;display:flex;flex-direction:column;justify-content:center}
+.stars{color:#ffc36f;letter-spacing:.08em;font-size:.9rem}
+.reviews-message h3{font-family:var(--serif);color:#fff;font-size:2.2rem;margin:12px 0 12px}
+.reviews-message p{color:rgba(255,255,255,.7);font-size:.86rem;margin:0}
+.review-ready-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.review-ready-card{min-height:210px;background:#fff;border-radius:18px;padding:20px;display:flex;flex-direction:column;justify-content:flex-end;box-shadow:0 12px 26px rgba(0,0,0,.12)}
+.review-ready-card:before{content:"★★★★★";color:#e0b56a;font-size:.72rem;letter-spacing:.05em;margin-bottom:auto}
+.review-ready-card span{text-transform:uppercase;letter-spacing:.1em;font-size:.61rem;color:var(--pink-dark);font-weight:800;margin-bottom:7px}
+.review-ready-card strong{font-family:var(--serif);font-size:1.12rem;line-height:1.2}
+.review-ready-card small{margin-top:9px;color:var(--muted);font-size:.66rem}
+
+/* --------------------------------------------------------------------------
+   FAQ
+   -------------------------------------------------------------------------- */
+.faq{background:#fff}
+.faq-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:70px;align-items:start}
+.faq-side{position:sticky;top:122px}
+.faq-side p{max-width:420px}
+.faq-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.faq-tab{border:1px solid var(--line);background:#fff;padding:8px 12px;border-radius:999px;font-size:.7rem;font-weight:800;cursor:pointer}
+.faq-tab.active{background:var(--pink-strong);border-color:var(--pink-strong);color:#fff}
+.faq-more{margin-top:18px}
+.faq-list{border-top:1px solid var(--line)}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-item[hidden]{display:none!important}
+.faq-extra:not(.is-revealed){display:none}
+.faq-item button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:24px;background:transparent;border:0;padding:21px 0;text-align:left;font-weight:800;cursor:pointer}
+.faq-item button span{font-size:.9rem}
+.faq-item button b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--pink-soft);color:var(--pink-dark);flex:0 0 auto;transition:.2s ease}
+.faq-item button b svg{width:16px;height:16px}
+.faq-item.open button b{transform:rotate(45deg);background:var(--pink-strong);color:#fff}
+.faq-answer{display:grid;grid-template-rows:0fr;transition:grid-template-rows .25s ease}
+.faq-answer>p{overflow:hidden;margin:0;padding-right:54px;font-size:.84rem}
+.faq-item.open .faq-answer{grid-template-rows:1fr}
+.faq-item.open .faq-answer>p{padding-bottom:22px}
+
+/* --------------------------------------------------------------------------
+   Enquiry form
+   -------------------------------------------------------------------------- */
+.enquiry{background:linear-gradient(135deg,#1b1518,#291b21);color:#fff;position:relative;overflow:hidden}
+.enquiry:before{content:"";position:absolute;right:-180px;top:-200px;width:520px;height:520px;border-radius:50%;background:rgba(223,113,138,.14);filter:blur(4px)}
+.enquiry-grid{position:relative;z-index:1;display:grid;grid-template-columns:.78fr 1.22fr;gap:62px;align-items:center}
+.enquiry h2{color:#fff}
+.enquiry-copy>p{color:rgba(255,255,255,.72);font-size:.96rem}
+.contact-list{display:grid;gap:16px;margin-top:32px}
+.contact-list>a,.contact-list>div{display:flex;align-items:center;gap:13px}
+.contact-list>a>span,.contact-list>div>span{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--pink-strong);color:#fff;flex:0 0 auto}
+.contact-list svg{width:19px;height:19px}
+.contact-list small,.contact-list strong{display:block}
+.contact-list small{color:#edb5c5;font-size:.65rem;text-transform:uppercase;letter-spacing:.09em}
+.contact-list strong{font-size:.82rem;overflow-wrap:anywhere}
+.enquiry-form{background:#fff;color:var(--ink);padding:30px;border-radius:24px;box-shadow:0 24px 60px rgba(0,0,0,.24)}
+.form-row.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.enquiry-form label{display:block;margin-bottom:14px}
+.enquiry-form label>span{display:block;font-size:.7rem;font-weight:800;margin-bottom:7px;color:#493d43}
+.enquiry-form input,.enquiry-form select,.enquiry-form textarea{width:100%;border:1px solid #ded3d7;background:#fff;border-radius:12px;padding:12px 13px;outline:none;transition:.2s ease}
+.enquiry-form input,.enquiry-form select{height:48px}
+.enquiry-form textarea{resize:vertical;min-height:128px}
+.enquiry-form input:focus,.enquiry-form select:focus,.enquiry-form textarea:focus{border-color:var(--pink-strong);box-shadow:0 0 0 3px rgba(223,113,138,.12)}
+.enquiry-form .invalid{border-color:#c74444;background:#fff8f8}
+.form-footer{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-top:4px}
+.form-footer p{font-size:.7rem;margin:0}
+.form-footer a{color:var(--pink-dark);font-weight:800}
+.form-message{display:none;margin-top:14px;padding:12px 14px;border-radius:12px;font-size:.78rem}
+.form-message.success{display:block;background:#effaf1;color:#246c34;border:1px solid #cceacf}
+.form-message.error{display:block;background:#fff4f4;color:#8d2e2e;border:1px solid #f1caca}
+
+/* --------------------------------------------------------------------------
+   Final CTA
+   -------------------------------------------------------------------------- */
+.final-cta{background:#fff}
+.final-card{position:relative;overflow:hidden;border-radius:30px;background:linear-gradient(135deg,#d6547c,#e7869e);color:#fff;padding:58px 64px;box-shadow:0 18px 46px rgba(183,63,98,.2)}
+.final-card:before{content:"";position:absolute;width:360px;height:360px;border-radius:50%;right:-80px;top:-120px;border:1px solid rgba(255,255,255,.2)}
+.final-card:after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;right:100px;bottom:-160px;border:1px solid rgba(255,255,255,.14)}
+.final-copy{position:relative;z-index:2;max-width:820px}
+.final-card h2{font-size:clamp(2.4rem,4vw,4rem)}
+.final-card p{color:rgba(255,255,255,.86);font-size:1rem;max-width:720px}
+.final-mark{position:absolute;right:40px;bottom:14px;font-family:var(--serif);font-style:italic;font-size:2.1rem;line-height:1.05;color:rgba(255,255,255,.24);transform:rotate(-4deg)}
+
+/* --------------------------------------------------------------------------
+   Recruitment
+   -------------------------------------------------------------------------- */
+.recruit{background:#fff}
+.recruit-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.recruit-photo img{width:100%;aspect-ratio:2.25/1;object-fit:cover;object-position:center;border-radius:26px;box-shadow:var(--shadow-soft)}
+.recruit-copy p{font-size:.96rem}
+.micro-copy{font-size:.72rem!important}
+.recruit-copy .btn{margin-top:6px}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+.site-footer{background:#131013;color:#fff;padding:74px 0 30px}
+.footer-grid{display:grid;grid-template-columns:1.7fr .8fr 1fr .9fr;gap:44px}
+.footer-brand img{width:154px;height:auto;margin-bottom:22px}
+.footer-brand p{color:rgba(255,255,255,.61);font-size:.8rem;max-width:480px}
+.footer-service-line{line-height:1.85}
+.footer-brand strong{font-family:var(--serif);font-size:1.32rem;color:#fff}
+.footer-col{display:grid;align-content:start;gap:9px}
+.footer-col h2{font-family:var(--sans);font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:#ffabc1;margin:0 0 10px}
+.footer-col a,.footer-col span{font-size:.78rem;color:rgba(255,255,255,.73)}
+.footer-col a:hover{color:#fff}
+.footer-book{display:inline-flex!important;align-items:center;gap:7px;margin-top:10px;color:#fff!important;font-weight:800}
+.footer-book svg{width:14px;height:14px}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);margin-top:52px;padding-top:22px;display:flex;justify-content:space-between;gap:20px;color:rgba(255,255,255,.43);font-size:.69rem}
+
+/* --------------------------------------------------------------------------
+   Mobile persistent CTA + feedback toast
+   -------------------------------------------------------------------------- */
+.mobile-book{display:none}
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,25px);opacity:0;pointer-events:none;background:var(--ink);color:#fff;padding:11px 15px;border-radius:999px;font-size:.75rem;z-index:500;box-shadow:0 14px 40px rgba(0,0,0,.25);transition:.22s ease}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* Reveal is a progressive enhancement; content remains visible without JS. */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.reveal.is-visible{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:.08s}
+.reveal-delay-2{transition-delay:.16s}
+.reveal-delay-3{transition-delay:.24s}
+.reveal-delay-4{transition-delay:.32s}
+
+/* --------------------------------------------------------------------------
+   Tablet / smaller desktop
+   -------------------------------------------------------------------------- */
+@media (max-width:1100px){
+  .desktop-nav{gap:16px}.desktop-nav a{font-size:.76rem}.phone-link span{display:none}
+  .hero-copy{width:min(665px,63%)}.hero-bg img{object-position:69% 50%}
+  .why-grid{grid-template-columns:1fr}.why-copy{max-width:650px}.why-points{grid-template-columns:repeat(3,1fr)}
+  .service-more-grid{grid-template-columns:repeat(2,1fr)}
+  .build-grid{grid-template-columns:1fr 1fr}.build-benefit{grid-column:1/-1;min-height:260px}
+  .faq-grid{grid-template-columns:.85fr 1.15fr;gap:44px}
+}
+
+/* --------------------------------------------------------------------------
+   Tablet
+   -------------------------------------------------------------------------- */
+@media (max-width:900px){
+  .section-pad{padding:82px 0}
+
+  .desktop-nav,.phone-link,.header-actions>.btn{display:none}
+  .menu-toggle{display:flex;margin-left:auto}
+  .header-actions{margin-left:auto}
+  .header-inner{height:78px}
+  .brand{width:128px}.brand img{width:119px}
+
+  .hero.hero-full{min-height:800px}
+  .hero-content{min-height:680px;padding:50px 0 46px;align-items:flex-start}
+  .hero-copy{width:min(610px,72%);padding-top:6px}
+  .hero-full h1{font-size:clamp(3rem,8.2vw,5rem)}
+  .hero-bg img{object-position:66% 50%}
+  .hero-wash{background:linear-gradient(90deg,rgba(255,255,255,.99) 0%,rgba(255,255,255,.96) 48%,rgba(255,253,253,.74) 69%,rgba(255,255,255,.14) 100%)}
+  .trust-strip-grid{grid-template-columns:repeat(3,1fr)}
+  .trust-strip-grid>div:nth-child(3){border-right:0}
+  .trust-strip-grid>div:nth-child(n+4){border-top:1px solid var(--line)}
+  .trust-strip-grid>div:nth-child(4){grid-column:1/2}
+  .trust-strip-grid>div:nth-child(5){grid-column:2/4;border-right:0}
+
+  .intro-grid,.area-grid,.enquiry-grid,.recruit-grid{grid-template-columns:1fr;gap:42px}
+  .task-float-card{left:18px}
+  .difference-panel{grid-template-columns:1fr;gap:28px;padding:50px 44px}
+
+  .audience-grid{grid-template-columns:repeat(2,1fr)}
+  .audience-card-wide{grid-column:auto}
+
+  .service-feature-grid{grid-template-columns:1fr}
+  .service-feature{min-height:240px}
+  .service-feature-wide{grid-column:auto;grid-template-columns:44% 56%}
+  .general-help-callout{grid-template-columns:auto 1fr}.general-help-callout .text-link{grid-column:2}
+
+  .build-grid{grid-template-columns:1fr 1fr}
+  .build-copy{grid-column:1/-1}
+  .build-benefit{grid-column:auto;min-height:0}
+  .build-benefit-image{min-height:360px}
+
+  .regular-grid{grid-template-columns:1fr;max-width:720px;margin-inline:auto}
+  .regular-card{min-height:0}
+  .regular-card.featured{transform:none}
+
+  .time-back-content{margin-left:20px;margin-right:20px}
+  .time-back-overlay{background:linear-gradient(90deg,rgba(13,9,11,.94),rgba(13,9,11,.76) 64%,rgba(13,9,11,.38))}
+
+  .steps-grid{grid-template-columns:1fr 1fr}
+  .steps-grid:before{display:none}
+  .step-card{text-align:left;display:grid;grid-template-columns:56px 1fr;column-gap:14px;align-items:start;padding:14px 0;border-bottom:1px solid var(--line)}
+  .step-no{grid-column:1;grid-row:1;align-self:start;text-align:center}
+  .step-icon{grid-column:1;grid-row:2/4;width:52px;height:52px;border-width:4px;margin:4px 0 0}
+  .step-icon svg{width:22px;height:22px}
+  .step-card h3{grid-column:2;grid-row:2}
+  .step-card p{grid-column:2;grid-row:3}
+
+  .reviews-stage{grid-template-columns:1fr}.review-ready-grid{grid-template-columns:repeat(3,1fr)}
+  .faq-grid{grid-template-columns:1fr}.faq-side{position:static}.faq-more{margin-bottom:10px}
+  .footer-grid{grid-template-columns:1.5fr 1fr 1fr}.footer-col:last-child{grid-column:2/4}.footer-bottom{flex-direction:column}
+}
+
+/* --------------------------------------------------------------------------
+   Mobile
+   -------------------------------------------------------------------------- */
+@media (max-width:680px){
+  body{font-size:15.5px;padding-bottom:78px}
+  .container{width:min(1180px,calc(100% - 28px))}
+  .section-pad{padding:68px 0}
+  h1{font-size:clamp(2.85rem,13.1vw,4.2rem);line-height:.97}
+  h2{font-size:clamp(2.2rem,10vw,3.15rem)}
+
+  .header-inner{height:70px}.brand img{width:106px}.menu-toggle{width:40px;height:40px}
+
+  /* On mobile the image becomes a lower visual layer. The copy remains fully
+     readable and the booking CTA stays above the fold. */
+  .hero.hero-full{min-height:900px}
+  .hero-bg img{object-position:64% 68%}
+  .hero-wash{background:linear-gradient(180deg,rgba(255,255,255,1) 0%,rgba(255,255,255,.985) 48%,rgba(255,250,252,.78) 66%,rgba(255,255,255,.04) 100%)}
+  .hero-content{min-height:760px;padding:36px 0 28px;align-items:flex-start}
+  .hero-copy{width:100%;max-width:540px}
+  .hero-full h1{font-size:clamp(2.75rem,12.4vw,4.05rem);max-width:540px}
+  .hero-brandline{font-size:2.08rem;margin-top:2px}
+  .hero-tagline{font-size:1.14rem}
+  .hero-emphasis{font-size:1.03rem}
+  .hero-lead{font-size:.95rem;line-height:1.55;max-width:500px}
+  .hero-actions{display:grid;grid-template-columns:1fr;margin-bottom:22px}
+  .hero-actions .btn{width:100%}
+  .hero-mini-proof{gap:10px 14px}
+  .hero-mini-proof span{font-size:.69rem}
+  .hero-service-note{font-size:.68rem}
+  .trust-strip-grid{grid-template-columns:1fr 1fr}
+  .trust-strip-grid>div{min-height:60px;font-size:.65rem;line-height:1.28;padding:10px 8px}
+  .trust-strip-grid>div:nth-child(2n){border-right:0}
+  .trust-strip-grid>div:nth-child(n+3){border-top:1px solid var(--line)}
+  .trust-strip-grid>div:nth-child(3){border-right:1px solid var(--line)}
+  .trust-strip-grid>div:nth-child(5){grid-column:1/-1}
+
+  .intro-grid{gap:34px}
+  .task-float-card{left:10px;right:10px;top:auto;bottom:10px;transform:none;grid-template-columns:1fr 1fr;padding:12px 14px}
+  .task-float-card span{font-size:.61rem}
+  .lead-quote{font-size:1.3rem!important}
+
+  .difference{padding-bottom:22px}
+  .difference-panel{padding:38px 26px;border-radius:26px}
+  .difference-copy>p{font-size:.95rem}
+  .difference-statement{font-size:1.82rem!important}
+
+  .audience-grid{grid-template-columns:1fr;gap:12px}
+  .audience-card{min-height:0;padding:22px}
+  .audience-card>span{margin-bottom:16px}
+
+  .section-head.split{display:block}
+  .section-head.split .btn{margin-top:16px;width:100%}
+  .section-head{margin-bottom:34px}
+
+  .service-feature{grid-template-columns:40% 60%;min-height:190px}
+  .service-feature-wide{grid-template-columns:40% 60%}
+  .service-feature-copy{padding:17px 15px;gap:10px}
+  .service-feature-copy h3{font-size:.91rem}
+  .service-feature-copy p{font-size:.72rem}
+  .service-icon{width:34px;height:34px;border-radius:10px}
+  .service-icon svg{width:18px;height:18px}
+  .service-more-grid{grid-template-columns:1fr;gap:10px}
+  .service-mini{padding:16px}
+  .service-scope{padding:15px}
+  .general-help-callout{grid-template-columns:auto 1fr;padding:17px}.general-help-callout .text-link{grid-column:1/-1;margin-left:50px}
+
+  .build-grid{grid-template-columns:1fr;gap:24px}
+  .build-copy,.build-benefit{grid-column:auto}
+  .build-checklist{padding:22px}
+  .build-benefit{padding:28px}
+  .build-benefit-image{padding:0;min-height:390px}
+  .build-benefit-copy{padding:24px}
+  .build-benefit h3{font-size:1.8rem}
+
+  .why-grid{gap:34px}
+  .why-points{grid-template-columns:1fr 1fr;gap:12px}
+  .why-card{padding:18px;min-height:168px}
+  .why-card>span{margin-bottom:16px}
+  .why-card p{font-size:.7rem}
+
+  .regular-card{padding:28px;min-height:0}
+  .regular-card h3{font-size:1.85rem}
+  .regular-card p{font-size:.92rem}
+
+  .time-back{min-height:610px}
+  .time-back-bg img{object-position:61% center}
+  .time-back-overlay{background:linear-gradient(180deg,rgba(13,9,11,.70) 0%,rgba(13,9,11,.90) 66%,rgba(13,9,11,.97) 100%)}
+  .time-back-content{padding:78px 0;align-self:flex-end}
+  .time-back blockquote{font-size:1.55rem}
+
+  .area-list{grid-template-columns:1fr 1fr;gap:0 18px}
+  .map-pin-card{left:10px;right:10px;bottom:10px}
+
+  .support-grid{grid-template-columns:1fr}
+  .support-card{padding:25px}
+  .support-card h3{font-size:1.66rem}
+
+  .steps-grid{grid-template-columns:1fr}
+  .step-card{grid-template-columns:52px 1fr}
+  .steps-cta .btn{width:100%}
+
+  .reviews-stage{padding:22px;border-radius:24px}
+  .reviews-message h3{font-size:1.8rem}
+  .review-ready-grid{grid-template-columns:1fr}
+  .review-ready-card{min-height:150px}
+
+  .faq-tabs{gap:6px}.faq-tab{font-size:.65rem}
+  .faq-item button{padding:18px 0}.faq-item button span{font-size:.84rem}
+  .faq-answer>p{padding-right:36px;font-size:.8rem}
+  .faq-more{width:100%}
+
+  .enquiry-grid{gap:34px}
+  .enquiry-form{padding:20px}
+  .form-row.two{grid-template-columns:1fr}
+  .form-footer{display:grid}
+  .form-footer .btn{width:100%}
+
+  .final-card{padding:42px 24px 76px;border-radius:24px}
+  .final-mark{right:18px;bottom:18px;font-size:1.45rem}
+  .final-card .button-row{display:grid}
+  .final-card .btn{width:100%}
+
+  .recruit-grid{gap:28px}.recruit-photo img{aspect-ratio:1.7/1}
+
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .footer-brand{grid-column:1/-1}
+  .footer-col:last-child{grid-column:auto}
+  .footer-bottom{margin-top:36px}
+
+  /* Requested persistent mobile booking action. Safe-area support prevents the
+     button from sitting under iPhone home indicators. */
+  .mobile-book{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:140;display:flex;align-items:center;justify-content:center;gap:9px;min-height:56px;border-radius:999px;background:linear-gradient(135deg,var(--pink-strong),#ca3e6d);color:#fff;font-weight:800;box-shadow:0 18px 40px rgba(159,28,80,.34);border:1px solid rgba(255,255,255,.2);opacity:0;transform:translateY(82px);pointer-events:none;transition:opacity .22s ease,transform .22s ease}
+  .mobile-book.is-visible{opacity:1;transform:none;pointer-events:auto}
+  .mobile-book svg{width:17px;height:17px}
+  .toast{bottom:82px}
+}
+
+/* Very small phones: keep type and two-column trust cards comfortable. */
+@media (max-width:420px){
+  .hero.hero-full{min-height:930px}
+  .hero-content{min-height:790px}
+  .hero-mini-proof{display:grid;gap:8px}
+  .why-points{grid-template-columns:1fr}
+  .area-list{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-brand{grid-column:auto}
+}
+
+/* Motion-sensitive users should receive the full content without animation. */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
+}
+
+/* Small supporting trust detail that does not need its own card. */
+.why-note{grid-column:1/-1;display:flex;align-items:center;gap:9px;margin:0;padding-top:2px;font-size:.76rem!important;color:#62565b}
+.why-note svg{color:var(--pink-dark);flex:0 0 auto}
+@media (max-width:900px){.why-note{grid-column:auto}}
+
+
+/* ========================================================================== 
+   Final refinement pass — spacing, stronger section imagery and conversion UI
+   These overrides intentionally sit last so they are easy to identify and
+   move into WordPress section-by-section during implementation.
+   ========================================================================== */
+
+/* Header: add breathing room between navigation, phone and the primary CTA. */
+.header-inner{height:96px;gap:32px}
+.brand{width:164px}
+.brand img{width:150px}
+.desktop-nav{gap:30px}
+.header-actions{gap:18px;margin-left:8px}
+.phone-link{gap:9px;padding-right:3px;font-size:.8rem}
+.header-actions>.btn{padding-inline:21px}
+
+/* Hero readability is slightly stronger without making the first screen busy. */
+.hero-mini-proof span{font-size:.81rem}
+.hero-service-note{font-size:.78rem}
+.trust-strip-grid>div{font-size:.78rem}
+
+/* The difference now feels like a premium lifestyle banner rather than a flat box. */
+.difference-panel{
+  background-image:
+    linear-gradient(100deg,rgba(20,12,16,.96) 0%,rgba(35,16,23,.90) 46%,rgba(38,17,25,.74) 100%),
+    url('assets/hire-a-wifey-home-organisation-hervey-bay@2x.webp');
+  background-size:cover;
+  background-position:center 46%;
+  min-height:410px;
+}
+.difference-panel:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.10));pointer-events:none}
+.difference-panel>*{position:relative;z-index:2}
+
+/* Who-we-help cards: a deliberately thin brand-pink outline keeps the section light. */
+.audience-card{border-color:rgba(223,113,138,.38);box-shadow:0 10px 28px rgba(76,33,50,.055)}
+.audience-card:hover{border-color:rgba(217,84,123,.62);box-shadow:0 16px 34px rgba(76,33,50,.09);transform:translateY(-2px);transition:.22s ease}
+.audience-card-wide{border-color:rgba(217,84,123,.48)}
+
+/* Services: larger text for scanability and tighter section exit spacing. */
+.services.section-pad{padding-bottom:82px}
+.service-feature{min-height:278px}
+.service-feature-copy{padding:28px 26px;gap:16px}
+.service-feature-copy h3{font-size:1.19rem;line-height:1.15;margin-bottom:10px}
+.service-feature-copy p{font-size:.91rem;line-height:1.56}
+.general-help-callout h3{font-size:1.08rem}
+.general-help-callout p{font-size:.86rem}
+.service-scope{margin-top:18px}
+
+/* Trust cards receive the same subtle pink edge for visual consistency. */
+.why-card{border-color:rgba(223,113,138,.24)}
+
+/* Better local image treatment: crisp, natural and large enough to feel genuinely local. */
+.area-photo{overflow:hidden;border-radius:28px;box-shadow:var(--shadow-soft)}
+.area-photo img,.area-local-image{width:100%;aspect-ratio:1.55/1;object-fit:cover;object-position:center 48%;border-radius:28px;box-shadow:none}
+.area-photo:after{content:"";position:absolute;inset:0;border-radius:28px;background:linear-gradient(180deg,transparent 55%,rgba(12,10,11,.12));pointer-events:none}
+.map-pin-card{z-index:2}
+
+/* Steps were a little small at full-page scale. */
+.step-card h3{font-size:1.02rem}
+.step-card p{font-size:.81rem;line-height:1.54}
+.step-icon{width:74px;height:74px}
+
+/* FAQ gets a softer stage so the long accordion is easier to scan. */
+.faq{background:linear-gradient(180deg,#fff,#fff9fb)}
+.faq-side{padding:28px;border:1px solid rgba(223,113,138,.20);border-radius:24px;background:rgba(255,255,255,.86);box-shadow:0 14px 34px rgba(62,31,43,.05)}
+.faq-item button span{font-size:.93rem}
+
+/* Enquiry section: lifestyle image behind a strong overlay; form remains fully readable. */
+.enquiry{
+  background-image:
+    linear-gradient(95deg,rgba(20,13,17,.97) 0%,rgba(31,17,24,.92) 48%,rgba(35,19,27,.84) 100%),
+    url('assets/hire-a-wifey-home-cleaning-hervey-bay@2x.webp');
+  background-size:cover;
+  background-position:center 42%;
+}
+.enquiry:before{background:radial-gradient(circle at 88% 10%,rgba(223,113,138,.22),transparent 32%);filter:none}
+.contact-list a,.contact-list>div{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:10px 12px}
+
+/* Final emotional close: real household imagery underneath the brand-pink overlay. */
+.final-card{
+  background-image:
+    linear-gradient(90deg,rgba(202,70,109,.95) 0%,rgba(218,91,127,.91) 48%,rgba(168,50,86,.74) 100%),
+    url('assets/hire-a-wifey-bed-making-linen-hervey-bay@2x.webp');
+  background-size:cover;
+  background-position:center 46%;
+}
+.final-card:before{background:linear-gradient(90deg,rgba(0,0,0,.06),transparent 70%);inset:0;width:auto;height:auto;border:0;border-radius:0}
+.final-card:after{display:none}
+.final-copy{max-width:780px}
+
+/* Recruitment image: keep both team members visible instead of cropping the faces. */
+.recruit-photo{overflow:hidden;border-radius:26px;box-shadow:var(--shadow-soft)}
+.recruit-photo img{aspect-ratio:1.55/1;object-position:center 25%;border-radius:0;box-shadow:none}
+.recruit-copy .btn{background:linear-gradient(135deg,var(--pink-strong),#e77895);color:#fff;box-shadow:0 12px 28px rgba(196,72,111,.24)}
+
+/* Footer social buttons — placeholders until the client supplies live profile URLs. */
+.footer-social{display:flex;align-items:center;gap:10px;margin-top:24px}
+.social-link{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--pink-strong);border:1px solid rgba(255,255,255,.18);color:#fff!important;font-weight:800;font-size:1rem;box-shadow:0 8px 20px rgba(214,84,123,.18);transition:.2s ease}
+.social-link:hover{transform:translateY(-2px);background:#e77895}
+.social-link-in{font-size:.74rem;letter-spacing:-.02em}
+
+/* Bottom-right message helper. No third-party dependency is required. */
+.live-message{position:fixed;right:22px;bottom:22px;z-index:210;display:grid;justify-items:end;gap:12px}
+.live-message-toggle{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:54px;padding:0 20px;border:0;border-radius:999px;background:linear-gradient(135deg,var(--pink-strong),#e77895);color:#fff;font-weight:800;box-shadow:0 18px 40px rgba(159,28,80,.30);cursor:pointer}
+.live-message-toggle svg{width:19px;height:19px}
+.live-message-panel{position:relative;width:min(340px,calc(100vw - 28px));padding:24px;background:#fff;border:1px solid #efdce3;border-radius:22px;box-shadow:0 24px 70px rgba(33,18,24,.22);color:var(--ink)}
+.live-message-panel[hidden]{display:none}
+.live-message-close{position:absolute;right:12px;top:10px;width:34px;height:34px;border:0;border-radius:50%;background:var(--pink-soft);color:var(--pink-dark);font-size:1.25rem;cursor:pointer}
+.live-message-eyebrow{display:block;color:var(--pink-dark);font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px}
+.live-message-panel>strong{display:block;font-family:var(--serif);font-size:1.65rem;line-height:1.08;margin-right:38px}
+.live-message-panel>p{font-size:.78rem;margin:8px 0 16px}
+.live-message-panel>a{display:flex;align-items:center;gap:11px;padding:11px 0;border-top:1px solid var(--line);font-weight:800;font-size:.8rem}
+.live-message-panel>a svg{width:20px;height:20px;color:var(--pink-dark);flex:0 0 auto}
+.live-message-panel>a small{display:block;color:var(--muted);font-weight:700;font-size:.62rem}
+
+@media (max-width:1180px){
+  .desktop-nav{gap:22px}
+  .header-actions{gap:12px;margin-left:0}
+}
+
+@media (max-width:900px){
+  .header-inner{height:78px}
+  .difference-panel{min-height:0;background-position:center}
+  .faq-side{padding:24px}
+  .live-message{right:16px;bottom:18px}
+}
+
+@media (max-width:680px){
+  .services.section-pad{padding-bottom:58px}
+  .service-feature{grid-template-columns:39% 61%;min-height:214px}
+  .service-feature-wide{grid-template-columns:39% 61%}
+  .service-feature-copy{padding:18px 16px;gap:11px}
+  .service-feature-copy h3{font-size:1rem;line-height:1.17;margin-bottom:6px}
+  .service-feature-copy p{font-size:.81rem;line-height:1.48}
+  .audience-card{border-color:rgba(223,113,138,.42)}
+  .difference-panel{background-position:58% center}
+  .area-photo img,.area-local-image{aspect-ratio:1.35/1}
+  .step-card h3{font-size:.98rem}
+  .step-card p{font-size:.8rem}
+  .faq-side{padding:20px;border-radius:20px}
+  .enquiry{background-position:63% center}
+  .final-card{background-position:62% center}
+  .recruit-photo img{aspect-ratio:1.4/1;object-position:center 20%}
+  .footer-social{margin-top:20px}
+  .live-message{right:12px;bottom:86px}
+  .live-message-toggle{width:52px;height:52px;min-height:52px;padding:0;border-radius:50%}
+  .live-message-toggle span{display:none}
+  .live-message-panel{width:min(330px,calc(100vw - 24px))}
+}
+
+/* ========================================================================== 
+   Final handoff polish — local-service image and spacing safeguards
+   ========================================================================== */
+
+/* Keep the replacement local-service image crisp while showing the worker, logo and checklist naturally. */
+.area-photo picture{display:block;width:100%;height:100%}
+.area-photo .area-local-image{aspect-ratio:1.42/1;object-position:center 42%}
+.map-pin-card{max-width:min(320px,calc(100% - 28px))}
+.map-pin-card strong{line-height:1.15}
+
+/* Preserve the requested breathing room without letting the header overflow on medium desktops. */
+@media (max-width:1240px) and (min-width:901px){
+  .header-inner{gap:24px}
+  .desktop-nav{gap:20px}
+  .header-actions{gap:12px}
+  .brand{width:150px}
+  .brand img{width:140px}
+  .phone-link{font-size:.74rem}
+  .header-actions>.btn{padding-inline:18px}
+}
+
+@media (max-width:680px){
+  .area-photo .area-local-image{aspect-ratio:1.24/1;object-position:center 36%}
+  .map-pin-card{left:10px;right:10px;max-width:none}
+}
+
+
+/* ========================================================================== 
+   Final QA pass — mobile readability, compact hero and stronger local context
+   ========================================================================== */
+
+/* Customer-facing review placeholders should not visually imply a real 5-star score. */
+.review-ready-card:before{content:"☆ ☆ ☆ ☆ ☆";letter-spacing:.02em;color:#d8a3b4;font-size:.8rem}
+
+/* Hervey Bay context: the main branded image stays prominent while a small
+   coastal cue makes the service-area message immediately local. */
+.local-area-badge{position:absolute;left:18px;bottom:18px;z-index:3;display:grid;grid-template-columns:92px 1fr;align-items:stretch;width:min(355px,calc(100% - 36px));overflow:hidden;border:1px solid rgba(255,255,255,.72);border-radius:18px;background:rgba(255,255,255,.95);box-shadow:0 16px 40px rgba(30,18,23,.18);backdrop-filter:blur(10px)}
+.local-area-badge-photo{display:block;min-height:76px;overflow:hidden}
+.local-area-badge-photo img{width:100%;height:100%;min-height:76px;object-fit:cover;aspect-ratio:auto!important;border-radius:0!important;box-shadow:none!important}
+.local-area-badge-copy{display:flex;align-items:center;gap:9px;padding:11px 13px;color:var(--ink)}
+.local-area-badge-copy svg{width:21px;height:21px;color:var(--pink-dark);flex:0 0 auto}
+.local-area-badge-copy strong{display:block;font-family:var(--serif);font-size:1rem;line-height:1.08}
+.local-area-badge-copy span{display:block;margin-top:3px;color:var(--muted);font-size:.66rem;line-height:1.25}
+
+/* Social icons are intentionally inert in the static concept until live profile
+   URLs are supplied. Keep the same visual affordance without a dead anchor. */
+button.social-link{padding:0;cursor:default;font-family:inherit}
+
+@media (max-width:900px){
+  .local-area-badge{left:14px;bottom:14px;width:min(380px,calc(100% - 28px))}
+}
+
+@media (max-width:680px){
+  /* A shorter first screen gets the visitor to the branded image/trust strip
+     sooner while keeping both conversion actions comfortably above the fold. */
+  body{font-size:16px}
+  .hero.hero-full{min-height:840px}
+  .hero-content{min-height:700px;padding:30px 0 22px}
+  .hero-full h1{font-size:clamp(2.65rem,11.9vw,3.9rem)}
+  .hero-brandline{font-size:2rem}
+  .hero-lead{font-size:1rem;line-height:1.56}
+  .hero-mini-proof span{font-size:.75rem}
+  .hero-service-note{font-size:.73rem;line-height:1.45}
+  .trust-strip-grid>div{font-size:.72rem;line-height:1.3;padding:11px 9px}
+
+  /* Service descriptions were the smallest important text in the mobile capture. */
+  .service-feature{grid-template-columns:40% 60%;min-height:220px}
+  .service-feature-wide{grid-template-columns:40% 60%}
+  .service-feature-copy{padding:18px 16px;gap:12px}
+  .service-feature-copy h3{font-size:1.08rem;line-height:1.18}
+  .service-feature-copy p{font-size:.88rem;line-height:1.5}
+  .service-mini h3{font-size:1rem}
+  .service-mini p,.general-help-callout p{font-size:.84rem;line-height:1.5}
+
+  /* Trust, support and process copy now remains readable in a 390px capture. */
+  .why-card{min-height:174px}
+  .why-card h3{font-size:.98rem}
+  .why-card p{font-size:.78rem;line-height:1.48}
+  .area-list span{font-size:.84rem}
+  .support-card p{font-size:.86rem;line-height:1.55}
+  .step-card h3{font-size:1.02rem}
+  .step-card p{font-size:.85rem;line-height:1.5}
+  .review-ready-card{min-height:142px}
+  .review-ready-card strong{font-size:1.18rem}
+  .review-ready-card small{font-size:.72rem}
+  .faq-item button span{font-size:.92rem;line-height:1.35}
+  .faq-answer>p{font-size:.86rem;line-height:1.55}
+  .footer-col a,.footer-col span{font-size:.8rem}
+
+  .local-area-badge{grid-template-columns:74px 1fr;left:10px;right:10px;bottom:10px;width:auto;border-radius:15px}
+  .local-area-badge-photo,.local-area-badge-photo img{min-height:68px}
+  .local-area-badge-copy{padding:9px 10px;gap:7px}
+  .local-area-badge-copy strong{font-size:.92rem}
+  .local-area-badge-copy span{font-size:.64rem}
+}
+
+@media (max-width:420px){
+  .hero.hero-full{min-height:865px}
+  .hero-content{min-height:720px}
+}
+
+
+/* ========================================================================== 
+   v1.4 mobile hero visibility + resilient contact helper
+   Client mobile QA showed the worker disappearing behind the long hero copy.
+   On phones the hero now becomes a clear two-part layout: message first,
+   branded Wifey photo second. This guarantees the uniform/logo stay visible.
+   ========================================================================== */
+.hero-mobile-visual{display:none}
+
+/* Native <details> contact helper works even if JavaScript is delayed or
+   disabled by caching/minification. JavaScript only adds convenience closing. */
+.live-message summary{list-style:none}
+.live-message summary::-webkit-details-marker{display:none}
+.live-message[open] .live-message-toggle{box-shadow:0 10px 28px rgba(159,28,80,.24)}
+
+@media (max-width:680px){
+  .hero.hero-full{
+    min-height:0!important;
+    display:block;
+    background:linear-gradient(180deg,#fff 0%,#fff8fa 100%);
+  }
+  .hero-full>.hero-bg,
+  .hero-full>.hero-wash{display:none!important}
+  .hero-content{padding:34px 0 24px!important}
+  .hero-copy{width:100%!important;max-width:none!important;padding:0!important}
+  .hero-full h1{font-size:clamp(2.55rem,11.3vw,3.75rem)!important;line-height:.96!important}
+  .hero-lead{font-size:1rem!important;line-height:1.68!important}
+  .hero-actions{margin-bottom:24px!important}
+  .hero-mini-proof{display:grid!important;grid-template-columns:1fr!important;gap:10px!important}
+  .hero-mini-proof span{font-size:.82rem!important}
+  .hero-service-note{font-size:.76rem!important;line-height:1.55!important;margin:18px 0 0!important}
+
+  .hero-mobile-visual{
+    display:block;
+    width:100%;
+    position:relative;
+    overflow:hidden;
+    background:#f8edf1;
+    border-top:1px solid rgba(223,113,138,.18);
+    border-bottom:1px solid rgba(223,113,138,.18);
+  }
+  .hero-mobile-visual picture,
+  .hero-mobile-visual img{display:block;width:100%}
+  .hero-mobile-visual img{
+    aspect-ratio:4/3;
+    height:auto;
+    object-fit:cover;
+    object-position:58% 42%;
+  }
+  .hero-mobile-visual:after{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(18,12,15,.07));
+  }
+  .hero-mobile-caption{
+    position:absolute;
+    left:16px;
+    bottom:16px;
+    z-index:2;
+    margin:0;
+    padding:9px 13px;
+    border-radius:999px;
+    background:rgba(255,255,255,.92);
+    color:var(--ink);
+    box-shadow:0 10px 28px rgba(38,20,28,.14);
+    font-size:.72rem;
+    font-weight:800;
+    backdrop-filter:blur(8px);
+  }
+  .hero-trust-strip{margin-top:0!important}
+
+  .live-message{right:12px!important;bottom:86px!important}
+  .live-message-toggle{width:52px!important;height:52px!important;min-height:52px!important;padding:0!important;border-radius:50%!important}
+  .live-message-toggle span{display:none!important}
+  .live-message-panel{width:min(330px,calc(100vw - 24px))!important}
+}
+
+@media (max-width:390px){
+  .hero-content{padding-top:28px!important}
+  .hero-full h1{font-size:clamp(2.35rem,11vw,3.25rem)!important}
+  .hero-mobile-visual img{object-position:59% 42%}
+}
+
+/* Keep the native details contact panel above the floating trigger. */
+.live-message-toggle{grid-row:2}
+.live-message-panel{grid-row:1}
+
+
+/* ========================================================================== 
+   v1.5 mobile hero — integrated photo with desktop-style fade
+   The worker remains part of the hero (not a separate card), but the photo is
+   reserved in the lower half of the mobile hero so the face, uniform and logo
+   stay visible instead of sitting behind buttons/trust copy.
+   ========================================================================== */
+@media (max-width:680px){
+  .hero.hero-full{
+    position:relative!important;
+    display:flex!important;
+    flex-direction:column!important;
+    min-height:0!important;
+    overflow:hidden!important;
+    background:linear-gradient(180deg,#fff 0%,#fff9fb 58%,#fdf5f8 100%)!important;
+  }
+  .hero-full>.hero-bg{
+    display:block!important;
+    position:absolute!important;
+    z-index:0!important;
+    inset:auto 0 0!important;
+    height:455px!important;
+    overflow:hidden!important;
+    pointer-events:none!important;
+  }
+  .hero-full>.hero-bg img{
+    width:100%!important;
+    height:100%!important;
+    object-fit:cover!important;
+    object-position:61% 38%!important;
+  }
+  .hero-full>.hero-wash{
+    display:block!important;
+    position:absolute!important;
+    z-index:1!important;
+    inset:auto 0 0!important;
+    height:500px!important;
+    pointer-events:none!important;
+    background:linear-gradient(180deg,
+      rgba(255,255,255,1) 0%,
+      rgba(255,255,255,.96) 9%,
+      rgba(255,255,255,.67) 25%,
+      rgba(255,251,252,.28) 44%,
+      rgba(255,255,255,.04) 72%,
+      rgba(255,255,255,.02) 100%)!important;
+  }
+  .hero-full>.hero-wash:after{
+    content:""!important;
+    position:absolute!important;
+    inset:0!important;
+    background:linear-gradient(90deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,.02) 58%,rgba(255,255,255,0) 100%)!important;
+  }
+  .hero-content{
+    position:relative!important;
+    z-index:2!important;
+    min-height:0!important;
+    padding:28px 0 365px!important;
+    align-items:flex-start!important;
+  }
+  .hero-copy{width:100%!important;max-width:none!important;padding:0!important}
+  .hero-full h1{font-size:clamp(2.45rem,10.8vw,3.55rem)!important;line-height:.98!important;max-width:540px!important}
+  .hero-brandline{font-size:2rem!important;margin-top:2px!important}
+  .hero-tagline{font-size:1.13rem!important}
+  .hero-emphasis{font-size:1.02rem!important}
+  .hero-lead{font-size:.98rem!important;line-height:1.62!important;max-width:520px!important}
+  .hero-actions{display:grid!important;grid-template-columns:1fr!important;margin-bottom:22px!important}
+  .hero-actions .btn{width:100%!important}
+  .hero-mini-proof{display:grid!important;grid-template-columns:1fr!important;gap:9px!important}
+  .hero-mini-proof span{font-size:.80rem!important}
+  .hero-service-note{font-size:.75rem!important;line-height:1.5!important;margin:16px 0 0!important}
+  .hero-mobile-visual{display:none!important}
+  .hero-trust-strip{position:relative!important;z-index:3!important;margin-top:0!important;background:rgba(255,255,255,.96)!important;backdrop-filter:blur(14px)!important}
+}
+@media (max-width:420px){
+  .hero-content{padding:24px 0 350px!important}
+  .hero-full>.hero-bg{height:430px!important}
+  .hero-full>.hero-wash{height:470px!important}
+  .hero-full>.hero-bg img{object-position:62% 38%!important}
+  .hero-full h1{font-size:clamp(2.3rem,10.7vw,3.25rem)!important}
+}
+@media (max-width:380px){
+  .hero-content{padding-bottom:330px!important}
+  .hero-full>.hero-bg{height:410px!important}
+  .hero-full>.hero-wash{height:450px!important}
+  .hero-full>.hero-bg img{object-position:63% 38%!important}
+}
+
+/* ========================================================================== 
+   v1.6 mobile hero photo lift
+   Keep the lower uniform/body visible above the three-row mobile trust strip.
+   The photo and its fade are lifted together so the composition stays soft and
+   the worker remains part of the hero without obscuring the conversion copy.
+   ========================================================================== */
+@media (max-width:680px){
+  .hero-full>.hero-bg{bottom:156px!important}
+  .hero-full>.hero-wash{bottom:156px!important}
+}
+@media (max-width:420px){
+  .hero-full>.hero-bg{bottom:150px!important}
+  .hero-full>.hero-wash{bottom:150px!important}
+}
+@media (max-width:380px){
+  .hero-full>.hero-bg{bottom:144px!important}
+  .hero-full>.hero-wash{bottom:144px!important}
+}
